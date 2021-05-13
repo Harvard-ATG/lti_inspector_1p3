@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+from .secure import SECURE_SETTINGS
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,10 +21,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure--f8-51n)+98k3m!#z1jy=&unljnveeq3$pa413v*_as233z4lx'
+SECRET_KEY = SECURE_SETTINGS.get('django_secret_key', 'changeme')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = SECURE_SETTINGS.get('enable_debug', False)
 
 ALLOWED_HOSTS = ['*']
 
@@ -70,17 +71,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'lti_inspector_1p3.wsgi.application'
 
+# SESSION_COOKIE_NAME = 'sessionid'
+# SESSION_COOKIE_SAMESITE = None  # should be set as 'None' for Django >= 3.1
+# SESSION_COOKIE_SECURE = False  # should be True in case of HTTPS usage (production)
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+DATABASES = {}
 
-DATABASES = {
+CACHES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
