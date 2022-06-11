@@ -1,8 +1,7 @@
-from django.urls import path
-from .views import launch, login, get_jwks
+from django.urls import path, include
+from django.contrib import admin
 
 urlpatterns = [
-    path('login/', login, name='inspector-login'),
-    path('launch/', launch, name='inspector-launch'),
-    path('jwks/', get_jwks, name='inspector-jwks'),
+    path('', include('inspector.urls')),
+    path('lti_inspector_admin/', admin.site.urls),
 ]

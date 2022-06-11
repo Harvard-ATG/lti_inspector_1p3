@@ -1,3 +1,0 @@
-Django~=3.2.0
-PyLTI1p3~=1.9.0
-six
